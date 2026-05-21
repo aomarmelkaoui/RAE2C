@@ -1,0 +1,310 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&family=Tajawal:wght@400;700;800&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--b0:#020B18;--b1:#061429;--b2:#0D2856;--b3:#1442A0;--b4:#1E56C8;--b5:#3B82F6;--b6:#60A5FA;--b8:#BFDBFE;--b9:#DBEAFE;--b10:#EFF6FF;--cy:#06B6D4;--sl:#475569;--tx:#0F172A}
+  .wrap{font-family:'Cairo',sans-serif;display:flex;flex-direction:column;min-height:100vh;background:var(--b10);color:var(--tx)}
+  .wrap.ar{font-family:'Tajawal',sans-serif;direction:rtl}
+
+  .lang-bar{background:var(--b0);padding:6px 28px;display:flex;align-items:center;justify-content:flex-end;gap:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .wrap.ar .lang-bar{justify-content:flex-start}
+  .lang-label{font-size:12px;color:rgba(255,255,255,.4);font-weight:600}
+  .lbtn{font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;cursor:pointer;border:1.5px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);transition:all .2s;font-family:inherit}
+  .lbtn.on{background:var(--b4);color:#fff;border-color:var(--b5)}
+  .lbtn:hover:not(.on){background:rgba(255,255,255,.08);color:#fff}
+
+  /* HEADER */
+  .hdr{background:linear-gradient(135deg,var(--b0) 0%,var(--b1) 40%,var(--b2) 100%);border-bottom:4px solid var(--b4);position:relative;overflow:hidden}
+  .hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 75% 50%,rgba(30,86,200,.22) 0%,transparent 55%),radial-gradient(ellipse at 15% 60%,rgba(6,182,212,.14) 0%,transparent 45%)}
+  .hdr-inner{position:relative;display:flex;align-items:center;gap:22px;padding:18px 32px}
+  .wrap.ar .hdr-inner{flex-direction:row-reverse}
+  .logo-box{width:110px;height:68px;background:#fff;border-radius:14px;border:2.5px solid var(--b5);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:5px 8px;box-shadow:0 0 0 5px rgba(59,130,246,.18)}
+  .logo-box img{width:100%;height:100%;object-fit:contain}
+  .hdr-txt{flex:1}
+  .wrap.ar .hdr-txt{text-align:right}
+  .hdr-sur{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--b6);text-transform:uppercase;margin-bottom:4px}
+  .hdr-t1{font-size:15px;font-weight:700;color:rgba(255,255,255,.72);margin-bottom:4px}
+  .hdr-t2{font-size:24px;font-weight:900;color:#fff;margin-bottom:4px}
+  .hdr-t3{font-size:13px;color:rgba(255,255,255,.42)}
+
+  /* ★ BADGES — 12 Régions + nb académies, sans LOT1 ★ */
+  .hdr-bdg{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  .wrap.ar .hdr-bdg{align-items:flex-start}
+
+  .bdg-main{
+    font-size:14px;font-weight:800;padding:8px 20px;
+    border-radius:24px;white-space:nowrap;
+    background:var(--cy);color:#fff;
+    letter-spacing:.3px;
+  }
+
+  /* Compteur académies sous le badge */
+  .acad-block{
+    display:flex;flex-direction:column;align-items:flex-end;gap:3px;
+  }
+  .wrap.ar .acad-block{align-items:flex-start}
+
+  .acad-count{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:12px;
+    padding:6px 16px;
+    white-space:nowrap;
+  }
+  .acad-num{
+    font-size:22px;font-weight:900;color:#fff;line-height:1;
+  }
+  .acad-sep{
+    width:1px;height:28px;background:rgba(255,255,255,.2);
+  }
+  .acad-info{display:flex;flex-direction:column}
+  .acad-lbl{font-size:11px;font-weight:700;color:var(--b6);letter-spacing:1px;text-transform:uppercase}
+  .acad-sub{font-size:10px;color:rgba(255,255,255,.4);margin-top:1px}
+
+  /* NAV */
+  .nav{background:var(--b2);border-bottom:1px solid rgba(255,255,255,.09);display:flex;align-items:center;padding:0 24px;overflow-x:auto;gap:2px}
+  .wrap.ar .nav{flex-direction:row-reverse}
+  .ni{padding:14px 18px;font-size:14px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border-bottom:3px solid transparent;border-top:none;border-left:none;border-right:none;white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:7px;background:none;font-family:inherit}
+  .ni:hover{color:rgba(255,255,255,.9)}
+  .ni.act{color:#fff;border-bottom-color:var(--cy)}
+  .nspc{flex:1}
+  .ndt{font-size:12.5px;color:rgba(255,255,255,.35);padding:0 10px;white-space:nowrap}
+
+  /* MAIN */
+  .main{display:flex;flex:1}
+  .wrap.ar .main{flex-direction:row-reverse}
+
+  .sb{width:285px;min-width:285px;background:var(--b1);border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column}
+  .wrap.ar .sb{border-right:none;border-left:1px solid rgba(255,255,255,.07)}
+  .sb-hd{padding:16px 18px 12px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03)}
+  .wrap.ar .sb-hd{text-align:right}
+  .sb-hd h3{font-size:11px;font-weight:800;color:var(--b6);letter-spacing:1.5px;text-transform:uppercase}
+  .sb-hd p{font-size:12.5px;color:rgba(255,255,255,.3);margin-top:3px}
+  .rlist{flex:1;padding:9px 10px;display:flex;flex-direction:column;gap:4px;overflow-y:auto}
+  .rbtn{display:flex;align-items:center;gap:11px;padding:10px 13px;border-radius:10px;cursor:pointer;border:1.5px solid transparent;background:transparent;transition:all .2s;text-align:left;width:100%;font-family:inherit}
+  .wrap.ar .rbtn{text-align:right;flex-direction:row-reverse}
+  .rbtn:hover{background:rgba(59,130,246,.18);border-color:rgba(96,165,250,.3)}
+  .rbtn.on{background:linear-gradient(135deg,var(--b4),var(--b3));border-color:var(--b5);box-shadow:0 5px 16px rgba(30,86,200,.45)}
+  .rnum{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:rgba(255,255,255,.35);flex-shrink:0}
+  .rbtn.on .rnum{background:rgba(255,255,255,.22);color:#fff}
+  .rnfo{flex:1;min-width:0}
+  .wrap.ar .rnfo{text-align:right}
+  .rnm{font-size:13px;font-weight:700;color:rgba(255,255,255,.62);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rbtn:hover .rnm,.rbtn.on .rnm{color:#fff}
+  .rsub{font-size:11px;color:rgba(255,255,255,.28);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rbtn.on .rsub{color:rgba(255,255,255,.58)}
+  .rcnt{font-size:11px;font-weight:800;border-radius:12px;padding:2px 8px;flex-shrink:0;background:rgba(255,255,255,.07);color:rgba(255,255,255,.3)}
+  .rbtn.on .rcnt{background:rgba(255,255,255,.2);color:#fff}
+
+  .cnt{flex:1;display:flex;flex-direction:column;background:var(--b10)}
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-bottom:1px solid #e2e8f0}
+  .kc{padding:18px 20px;border-right:1px solid #f1f5f9;position:relative}
+  .wrap.ar .kc{border-right:none;border-left:1px solid #f1f5f9;text-align:right}
+  .kc:last-child{border-right:none}
+  .wrap.ar .kc:last-child{border-left:none}
+  .kl{font-size:11px;color:var(--sl);letter-spacing:.5px;font-weight:700;text-transform:uppercase}
+  .kv{font-size:32px;font-weight:900;color:var(--tx);margin:6px 0 4px;line-height:1}
+  .kd{font-size:12.5px;color:var(--b4);display:flex;align-items:center;gap:4px;font-weight:700}
+  .wrap.ar .kd{flex-direction:row-reverse}
+  .kacc{width:4px;height:42px;border-radius:2px;position:absolute;left:0;top:50%;transform:translateY(-50%)}
+  .wrap.ar .kacc{left:auto;right:0}
+
+  .area{padding:24px;flex:1}
+  .ctit{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .wrap.ar .ctit{flex-direction:row-reverse}
+  .ctit h2{font-size:21px;font-weight:900;color:var(--tx)}
+  .rtag{font-size:13px;padding:4px 13px;border-radius:22px;font-weight:800;background:var(--b9);color:var(--b3);border:1.5px solid rgba(30,86,200,.2)}
+  .dg{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:18px}
+  .dc{background:#fff;border:1px solid #e2e8f0;border-radius:13px;padding:16px 18px;display:flex;align-items:center;gap:14px;border-top:4px solid var(--b5)}
+  .wrap.ar .dc{flex-direction:row-reverse}
+  .dc:nth-child(2){border-top-color:var(--cy)}.dc:nth-child(3){border-top-color:var(--b3)}
+  .dic{width:48px;height:48px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dic1{background:var(--b9)}.dic2{background:#cffafe}.dic3{background:#ede9fe}
+  .dv{font-size:24px;font-weight:900;color:var(--tx)}
+  .dl{font-size:13px;color:var(--sl);margin-top:2px;font-weight:600}
+  .wrap.ar .dc>div:last-child{text-align:right}
+  .tc{background:#fff;border:1px solid #e2e8f0;border-radius:13px;overflow:hidden}
+  .th2{padding:14px 18px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,var(--b10),#fff)}
+  .wrap.ar .th2{flex-direction:row-reverse;background:linear-gradient(270deg,var(--b10),#fff)}
+  .th2 h3{font-size:15px;font-weight:800;color:var(--tx)}
+  .th2-act{display:flex;gap:9px;align-items:center}
+  .btn-ct{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:linear-gradient(135deg,var(--b4),var(--cy));color:#fff;font-size:13.5px;font-weight:800;border:none;border-radius:9px;cursor:pointer;white-space:nowrap;box-shadow:0 3px 10px rgba(30,86,200,.28);transition:all .2s;font-family:inherit}
+  .btn-ct:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(30,86,200,.4)}
+  .btn-in{background:linear-gradient(135deg,#7c3aed,var(--cy))}
+  .bsm{font-size:13px;padding:7px 14px;border-radius:8px;border:1.5px solid var(--b8);background:var(--b10);color:var(--b4);font-weight:800;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:inherit}
+  .bsm:hover{background:var(--b9)}
+  table{width:100%;border-collapse:collapse}
+  th{padding:11px 16px;font-size:11.5px;font-weight:800;color:var(--sl);text-transform:uppercase;letter-spacing:.5px;text-align:left;background:#f8fafc;border-bottom:1px solid #f1f5f9}
+  .wrap.ar th{text-align:right}
+  td{padding:12px 16px;font-size:14px;color:var(--tx);border-bottom:1px solid #f8fafc}
+  .wrap.ar td{text-align:right}
+  tr:last-child td{border-bottom:none}tr:hover td{background:var(--b10)}
+  .sp{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px}
+  .sa{background:var(--b9);color:var(--b3)}.sp2{background:#fef3c7;color:#92400e}.sn{background:#d1fae5;color:#065f46}
+  .ftr{background:var(--b0);padding:13px 30px;display:flex;align-items:center;justify-content:space-between;border-top:3px solid var(--b4)}
+  .wrap.ar .ftr{flex-direction:row-reverse}
+  .ftr p{font-size:12px;color:rgba(255,255,255,.28)}
+  .fbr{font-size:13px;color:var(--b6);font-weight:800}
+  .flb{font-size:11px;padding:3px 9px;border-radius:5px;background:rgba(59,130,246,.15);color:var(--b6);border:1px solid rgba(96,165,250,.25);letter-spacing:1px;font-weight:800}
+</style>
+
+<div class="wrap" id="app">
+  <div class="lang-bar">
+    <span class="lang-label" id="ll">Langue :</span>
+    <button class="lbtn on" id="bfr" onclick="setLang('fr')">🇫🇷 Français</button>
+    <button class="lbtn" id="bar" onclick="setLang('ar')">🇲🇦 العربية</button>
+  </div>
+
+  <div class="hdr">
+    <div class="hdr-inner">
+      <div class="logo-box">
+        <img src="/mnt/user-data/uploads/1779388207226_image.png" alt="RAE2C"
+          onerror="this.parentElement.innerHTML='<b style=\'color:#1442A0;font-size:15px\'>RAE2C</b>'"/>
+      </div>
+      <div class="hdr-txt">
+        <div class="hdr-sur" id="hs"></div>
+        <div class="hdr-t1" id="ht1"></div>
+        <div class="hdr-t2" id="ht2"></div>
+        <div class="hdr-t3" id="ht3"></div>
+      </div>
+
+      <!-- ★ BADGES : 12 Régions + académies — sans LOT1 ★ -->
+      <div class="hdr-bdg">
+        <span class="bdg-main" id="b1"></span>
+        <!-- Compteur académies -->
+        <div class="acad-count">
+          <div class="acad-num" id="acad-num">12</div>
+          <div class="acad-sep"></div>
+          <div class="acad-info">
+            <span class="acad-lbl" id="acad-lbl">Académies</span>
+            <span class="acad-sub" id="acad-sub">Régions couvertes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="ni act" id="ndb" onclick="setNav(this)"><i class="ti ti-layout-dashboard"></i><span id="s-db"></span></button>
+    <button class="ni" id="nfo" onclick="setNav(this)"><i class="ti ti-chalkboard"></i><span id="s-fo"></span></button>
+    <button class="ni" id="nce" onclick="setNav(this)"><i class="ti ti-file-certificate"></i><span id="s-ce"></span></button>
+    <button class="ni" id="nra" onclick="setNav(this)"><i class="ti ti-chart-bar"></i><span id="s-ra"></span></button>
+    <div class="nspc"></div>
+    <div class="ndt" id="ndt"></div>
+    <button class="ni"><i class="ti ti-settings"></i></button>
+    <button class="ni"><i class="ti ti-user-circle"></i></button>
+  </div>
+
+  <div class="main">
+    <div class="sb">
+      <div class="sb-hd"><h3 id="sbt"></h3><p id="sbs"></p></div>
+      <div class="rlist" id="rlist"></div>
+    </div>
+    <div class="cnt">
+      <div class="kpi">
+        <div class="kc"><div class="kacc" style="background:var(--b4)"></div><div class="kl" id="kl1"></div><div class="kv" id="k1">—</div><div class="kd"><i class="ti ti-trending-up"></i><span id="kd1"></span></div></div>
+        <div class="kc"><div class="kacc" style="background:var(--cy)"></div><div class="kl" id="kl2"></div><div class="kv" id="k2">—</div><div class="kd"><i class="ti ti-trending-up"></i><span id="kd2"></span></div></div>
+        <div class="kc"><div class="kacc" style="background:var(--b5)"></div><div class="kl" id="kl3"></div><div class="kv" id="k3">—</div><div class="kd"><i class="ti ti-trending-up"></i><span id="kd3"></span></div></div>
+        <div class="kc"><div class="kacc" style="background:#7c3aed"></div><div class="kl" id="kl4"></div><div class="kv" id="k4">—</div><div class="kd"><i class="ti ti-trending-up"></i><span id="kd4"></span></div></div>
+      </div>
+      <div class="area">
+        <div class="ctit"><h2 id="rtit"></h2><span class="rtag" id="rtag"></span></div>
+        <div class="dg">
+          <div class="dc"><div class="dic dic1"><i class="ti ti-building" style="color:var(--b4);font-size:24px"></i></div><div><div class="dv" id="d1">—</div><div class="dl" id="dl1"></div></div></div>
+          <div class="dc"><div class="dic dic2"><i class="ti ti-users" style="color:var(--cy);font-size:24px"></i></div><div><div class="dv" id="d2">—</div><div class="dl" id="dl2"></div></div></div>
+          <div class="dc"><div class="dic dic3"><i class="ti ti-certificate" style="color:#7c3aed;font-size:24px"></i></div><div><div class="dv" id="d3">—</div><div class="dl" id="dl3"></div></div></div>
+        </div>
+        <div class="tc">
+          <div class="th2">
+            <h3 id="ttit"></h3>
+            <div class="th2-act">
+              <button class="btn-ct" onclick="window.open('https://forms.gle/dHbgYEo9FkSkY3Mw8','_blank','noopener,noreferrer')"><i class="ti ti-circle-plus"></i><span id="bc"></span></button>
+              <button class="btn-ct btn-in" onclick="window.open('https://forms.gle/5MtxVSJTWNmF5NfR6','_blank','noopener,noreferrer')"><i class="ti ti-user-plus"></i><span id="bi"></span></button>
+              <button class="bsm"><i class="ti ti-download"></i><span id="be"></span></button>
+            </div>
+          </div>
+          <table>
+            <thead id="th"></thead>
+            <tbody id="tb"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ftr">
+    <p id="fc"></p>
+    <span class="fbr">RAE2C · Nouvelle Génération</span>
+    <span class="flb">LOT 1 · v2.2</span>
+  </div>
+</div>
+
+<script>
+const T={
+  fr:{ll:'Langue :',hs:'🇲🇦 Royaume du Maroc',ht1:'Réseaux National Des Associations — École de la 2ème Chance',ht2:'Plateforme de Gestion · Nouvelle Génération',ht3:'Système Intégré du Réseau National E2C · 12 Régions',b1:'🗺 12 Régions',acadLbl:'Académies',acadSub:'Régions couvertes',sdb:'Tableau de bord',sfo:'Formateurs',sce:'Certifications',sra:'Rapports',ndt:'Mai 2026',sbt:'🗺 Régions du Maroc',sbs:'Cliquer pour sélectionner',kl1:'Associations',kl2:'Apprenants actifs',kl3:'Formateurs',kl4:'Taux insertion',kd1:'+3 cette année',kd2:'Inscrits 2025–26',kd3:'Certifiés',kd4:'Objectif : 85%',rd:'Sélectionnez une région',rg:'Maroc — 12 Régions',dl1:'Associations',dl2:'Apprenants',dl3:"Taux d'insertion",ttd:'Associations — Vue nationale',bc:'Centre',bi:'Inscription',be:'Exporter',th:['Association','Ville','Apprenants','Filières','Statut'],em:'← Sélectionnez une région dans le panneau gauche',as:'assoc.',ap:'app.',rp:'Région',rs:'/',d1s:' assoc.',ttp:'Associations —',sa:'🔵 Actif',sp:'🟡 En développement',sn:'🟢 Nouveau',fc:'© 2026 RAE2C — Réseau National des Associations E2C Maroc'},
+  ar:{ll:'اللغة :',hs:'🇲🇦 المملكة المغربية',ht1:'الشبكة الوطنية للجمعيات — مدرسة الفرصة الثانية',ht2:'منصة التسيير · الجيل الجديد',ht3:'نظام متكامل للشبكة الوطنية · 12 جهة',b1:'🗺 12 جهة',acadLbl:'الأكاديميات',acadSub:'الجهات المغطاة',sdb:'لوحة القيادة',sfo:'المكونون',sce:'الشهادات',sra:'التقارير',ndt:'ماي 2026',sbt:'🗺 جهات المغرب',sbs:'انقر لاختيار جهة',kl1:'الجمعيات',kl2:'المتعلمون النشيطون',kl3:'المكونون',kl4:'نسبة الإدماج',kd1:'+3 هذه السنة',kd2:'مسجلون 2025–26',kd3:'معتمدون',kd4:'الهدف : 85%',rd:'اختر جهة',rg:'المغرب — 12 جهة',dl1:'الجمعيات',dl2:'المتعلمون',dl3:'نسبة الإدماج',ttd:'الجمعيات — نظرة وطنية',bc:'المركز',bi:'تسجيل',be:'تصدير',th:['الجمعية','المدينة','المتعلمون','الشعب','الحالة'],em:'← اختر جهة من القائمة',as:'جمعية',ap:'متعلم',rp:'الجهة',rs:'/',d1s:' جمعية',ttp:'الجمعيات —',sa:'🔵 نشيط',sp:'🟡 قيد التطوير',sn:'🟢 جديد',fc:'© 2026 RAE2C — الشبكة الوطنية لجمعيات مدرسة الفرصة الثانية'}
+};
+const R={
+  fr:[{id:1,n:"Tanger-Tétouan-Al Hoceïma",s:"Tanger-Tétouan",e:8,a:1240,f:52,t:"71%"},{id:2,n:"Oriental",s:"Oriental",e:5,a:780,f:34,t:"68%"},{id:3,n:"Fès-Meknès",s:"Fès-Meknès",e:11,a:1680,f:71,t:"74%"},{id:4,n:"Rabat-Salé-Kénitra",s:"Rabat-Salé",e:13,a:2050,f:88,t:"77%"},{id:5,n:"Béni Mellal-Khénifra",s:"Béni Mellal",e:7,a:1100,f:46,t:"69%"},{id:6,n:"Casablanca-Settat",s:"Casablanca",e:18,a:3200,f:135,t:"79%"},{id:7,n:"Marrakech-Safi",s:"Marrakech",e:12,a:1950,f:82,t:"75%"},{id:8,n:"Drâa-Tafilalet",s:"Drâa-Tafilalet",e:6,a:890,f:38,t:"66%"},{id:9,n:"Souss-Massa",s:"Souss-Massa",e:9,a:1350,f:57,t:"72%"},{id:10,n:"Guelmim-Oued Noun",s:"Guelmim",e:4,a:520,f:22,t:"63%"},{id:11,n:"Laâyoune-Sakia El Hamra",s:"Laâyoune",e:4,a:480,f:20,t:"61%"},{id:12,n:"Dakhla-Oued Ed-Dahab",s:"Dakhla",e:3,a:350,f:15,t:"58%"}],
+  ar:[{id:1,n:"طنجة-تطوان-الحسيمة",s:"طنجة-تطوان",e:8,a:1240,f:52,t:"71%"},{id:2,n:"الشرق",s:"الشرق",e:5,a:780,f:34,t:"68%"},{id:3,n:"فاس-مكناس",s:"فاس-مكناس",e:11,a:1680,f:71,t:"74%"},{id:4,n:"الرباط-سلا-القنيطرة",s:"الرباط-سلا",e:13,a:2050,f:88,t:"77%"},{id:5,n:"بني ملال-خنيفرة",s:"بني ملال",e:7,a:1100,f:46,t:"69%"},{id:6,n:"الدار البيضاء-سطات",s:"الدار البيضاء",e:18,a:3200,f:135,t:"79%"},{id:7,n:"مراكش-آسفي",s:"مراكش",e:12,a:1950,f:82,t:"75%"},{id:8,n:"درعة-تافيلالت",s:"درعة-تافيلالت",e:6,a:890,f:38,t:"66%"},{id:9,n:"سوس-ماسة",s:"سوس-ماسة",e:9,a:1350,f:57,t:"72%"},{id:10,n:"كلميم-واد نون",s:"كلميم",e:4,a:520,f:22,t:"63%"},{id:11,n:"العيون-الساقية الحمراء",s:"العيون",e:4,a:480,f:20,t:"61%"},{id:12,n:"الداخلة-وادي الذهب",s:"الداخلة",e:3,a:350,f:15,t:"58%"}]
+};
+const D={
+  fr:{1:[["Ass. E2C Tanger Nord","Tanger",160,"5 filières","a"],["Ass. E2C Tétouan","Tétouan",140,"4 filières","a"],["Ass. E2C Al Hoceïma","Al Hoceïma",95,"3 filières","p"]],2:[["Ass. E2C Oujda","Oujda",210,"5 filières","a"],["Ass. E2C Nador","Nador",150,"4 filières","a"]],3:[["Ass. E2C Fès Médina","Fès",280,"6 filières","a"],["Ass. E2C Fès Moderne","Fès",210,"5 filières","a"],["Ass. E2C Meknès","Meknès",190,"5 filières","a"],["Ass. E2C Ifrane","Ifrane",80,"2 filières","n"]],4:[["Ass. E2C Rabat Centre","Rabat",350,"7 filières","a"],["Ass. E2C Salé","Salé",280,"6 filières","a"],["Ass. E2C Kénitra","Kénitra",220,"5 filières","a"],["Ass. E2C Témara","Témara",180,"4 filières","p"]],5:[["Ass. E2C Béni Mellal","Béni Mellal",230,"5 filières","a"],["Ass. E2C Khénifra","Khénifra",160,"4 filières","a"],["Ass. E2C Khouribga","Khouribga",190,"4 filières","p"]],6:[["Ass. E2C Casa Aïn Chock","Casablanca",420,"8 filières","a"],["Ass. E2C Hay Mohammadi","Casablanca",380,"7 filières","a"],["Ass. E2C Settat","Settat",220,"5 filières","a"]],7:[["Ass. E2C Marrakech Médina","Marrakech",320,"7 filières","a"],["Ass. E2C Marrakech Gueliz","Marrakech",280,"6 filières","a"],["Ass. E2C Safi","Safi",210,"5 filières","a"]],8:[["Ass. E2C Ouarzazate","Ouarzazate",220,"4 filières","a"],["Ass. E2C Errachidia","Errachidia",190,"4 filières","a"],["Ass. E2C Zagora","Zagora",130,"3 filières","p"]],9:[["Ass. E2C Agadir","Agadir",310,"6 filières","a"],["Ass. E2C Inezgane","Agadir",210,"5 filières","a"],["Ass. E2C Taroudant","Taroudant",170,"4 filières","a"]],10:[["Ass. E2C Guelmim","Guelmim",180,"4 filières","a"],["Ass. E2C Tan-Tan","Tan-Tan",140,"3 filières","a"]],11:[["Ass. E2C Laâyoune","Laâyoune",200,"4 filières","a"],["Ass. E2C Boujdour","Boujdour",140,"3 filières","a"]],12:[["Ass. E2C Dakhla","Dakhla",180,"4 filières","a"],["Ass. E2C Aousserd","Aousserd",90,"2 filières","p"]]},
+  ar:{1:[["جمعية م.ف.ث طنجة الشمال","طنجة",160,"5 شعب","a"],["جمعية م.ف.ث تطوان","تطوان",140,"4 شعب","a"],["جمعية م.ف.ث الحسيمة","الحسيمة",95,"3 شعب","p"]],2:[["جمعية م.ف.ث وجدة","وجدة",210,"5 شعب","a"],["جمعية م.ف.ث الناظور","الناظور",150,"4 شعب","a"]],3:[["جمعية م.ف.ث فاس المدينة","فاس",280,"6 شعب","a"],["جمعية م.ف.ث مكناس","مكناس",190,"5 شعب","a"]],4:[["جمعية م.ف.ث الرباط","الرباط",350,"7 شعب","a"],["جمعية م.ف.ث سلا","سلا",280,"6 شعب","a"],["جمعية م.ف.ث القنيطرة","القنيطرة",220,"5 شعب","a"]],5:[["جمعية م.ف.ث بني ملال","بني ملال",230,"5 شعب","a"],["جمعية م.ف.ث خريبكة","خريبكة",190,"4 شعب","p"]],6:[["جمعية م.ف.ث عين الشق","الدار البيضاء",420,"8 شعب","a"],["جمعية م.ف.ث الحي المحمدي","الدار البيضاء",380,"7 شعب","a"]],7:[["جمعية م.ف.ث مراكش المدينة","مراكش",320,"7 شعب","a"],["جمعية م.ف.ث آسفي","آسفي",210,"5 شعب","a"]],8:[["جمعية م.ف.ث ورزازات","ورزازات",220,"4 شعب","a"],["جمعية م.ف.ث زاكورة","زاكورة",130,"3 شعب","p"]],9:[["جمعية م.ف.ث أكادير","أكادير",310,"6 شعب","a"],["جمعية م.ف.ث تارودانت","تارودانت",170,"4 شعب","a"]],10:[["جمعية م.ف.ث كلميم","كلميم",180,"4 شعب","a"],["جمعية م.ف.ث طانطان","طانطان",140,"3 شعب","a"]],11:[["جمعية م.ف.ث العيون","العيون",200,"4 شعب","a"],["جمعية م.ف.ث بوجدور","بوجدور",140,"3 شعب","a"]],12:[["جمعية م.ف.ث الداخلة","الداخلة",180,"4 شعب","a"],["جمعية م.ف.ث اوسرد","اوسرد",90,"2 شعب","p"]]}
+};
+const SC={a:"sp sa",p:"sp sp2",n:"sp sn"};
+let lang='fr',cur=null;
+function g(id){return document.getElementById(id)}
+function setNav(el){document.querySelectorAll('.ni').forEach(n=>n.classList.remove('act'));el.classList.add('act')}
+function setLang(l){
+  lang=l;cur=null;
+  document.getElementById('app').classList.toggle('ar',l==='ar');
+  g('bfr').classList.toggle('on',l==='fr');g('bar').classList.toggle('on',l==='ar');
+  const t=T[l];
+  g('ll').textContent=t.ll;g('hs').textContent=t.hs;g('ht1').textContent=t.ht1;g('ht2').textContent=t.ht2;g('ht3').textContent=t.ht3;
+  g('b1').textContent=t.b1;
+  g('acad-lbl').textContent=t.acadLbl;g('acad-sub').textContent=t.acadSub;
+  g('s-db').textContent=t.sdb;g('s-fo').textContent=t.sfo;g('s-ce').textContent=t.sce;g('s-ra').textContent=t.sra;
+  g('ndt').innerHTML=`<i class="ti ti-calendar"></i> ${t.ndt}`;
+  g('sbt').textContent=t.sbt;g('sbs').textContent=t.sbs;
+  g('kl1').textContent=t.kl1;g('kl2').textContent=t.kl2;g('kl3').textContent=t.kl3;g('kl4').textContent=t.kl4;
+  g('kd1').textContent=t.kd1;g('kd2').textContent=t.kd2;g('kd3').textContent=t.kd3;g('kd4').textContent=t.kd4;
+  g('rtit').textContent=t.rd;g('rtag').textContent=t.rg;
+  g('dl1').textContent=t.dl1;g('dl2').textContent=t.dl2;g('dl3').textContent=t.dl3;
+  g('d1').textContent='—';g('d2').textContent='—';g('d3').textContent='—';
+  g('ttit').textContent=t.ttd;g('bc').textContent=t.bc;g('bi').textContent=t.bi;g('be').textContent=t.be;
+  g('th').innerHTML='<tr>'+t.th.map(c=>`<th>${c}</th>`).join('')+'</tr>';
+  g('tb').innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--sl);padding:34px;font-size:15px;font-weight:600">${t.em}</td></tr>`;
+  g('fc').textContent=t.fc;
+  kpiTotal();drawSB();
+}
+function kpiTotal(){
+  let e=0,a=0,f=0;R[lang].forEach(r=>{e+=r.e;a+=r.a;f+=r.f;});
+  g('k1').textContent=e;g('k2').textContent=a.toLocaleString('fr-FR');g('k3').textContent=f;g('k4').textContent="71%";
+}
+function drawSB(){
+  const l=g('rlist');l.innerHTML='';const t=T[lang];
+  R[lang].forEach(r=>{
+    const b=document.createElement('button');
+    b.className='rbtn'+(r.id===cur?' on':'');
+    b.innerHTML=`<div class="rnum">${r.id}</div><div class="rnfo"><div class="rnm">${r.n}</div><div class="rsub">${r.e} ${t.as} · ${r.a.toLocaleString('fr-FR')} ${t.ap}</div></div><span class="rcnt">${r.e}</span>`;
+    b.onclick=()=>pick(r.id);l.appendChild(b);
+  });
+}
+function pick(id){
+  cur=id;const t=T[lang];const r=R[lang].find(x=>x.id===id);drawSB();
+  g('k1').textContent=r.e;g('k2').textContent=r.a.toLocaleString('fr-FR');g('k3').textContent=r.f;g('k4').textContent=r.t;
+  g('rtit').textContent=r.n;g('rtag').textContent=t.rp+' '+r.id+' '+t.rs+' 12';
+  g('d1').textContent=r.e+t.d1s;g('d2').textContent=r.a.toLocaleString('fr-FR');g('d3').textContent=r.t;
+  g('ttit').textContent=t.ttp+' '+r.s;
+  const tb=g('tb');tb.innerHTML='';
+  (D[lang][id]||[]).forEach(([nm,vl,ap,fi,st])=>{
+    const sl={a:t.sa,p:t.sp,n:t.sn};
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="font-weight:700">${nm}</td><td>${vl}</td><td style="font-weight:700">${ap}</td><td>${fi}</td><td><span class="${SC[st]}">${sl[st]}</span></td>`;
+    tb.appendChild(tr);
+  });
+}
+setLang('fr');
+</script>
